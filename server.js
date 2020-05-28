@@ -6,6 +6,7 @@ const express = require("express");
 const expressLayouts = require("express-ejs-layouts");
 const path = require("path");
 const mongoose = require("mongoose");
+const bodyParser = require("body-parser");
 
 const app = express();
 
@@ -14,9 +15,11 @@ app.set("views", path.join(__dirname, "views"));
 app.set("layout", "layouts/layout");
 app.use(expressLayouts);
 app.use(express.static("public"));
+app.use(bodyParser.urlencoded({ extended: false }));
 
 // Call routing
 app.use("/", require("./routes/index"));
+app.use("/authors", require("./routes/authors"));
 
 // DB connection
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
